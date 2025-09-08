@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Ulang Tahun, Rama!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        body {
+            background-color: #000033;
+            color: white;
+            font-family: 'VT323', monospace;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .desktop {
+            width: 80%;
+            height: 80%;
+            background-color: #1100ff;
+            border: 2px solid #c4c4c4;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            
+        }
+
+        .icon-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+            gap: 15px;
+            flex-grow: 1;
+        }
+
+        .icon {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            width: 80px;
+            text-align: center;
+            text-shadow: 2px 2px #000;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            background-color: #c0c0c0;
+            border: 2px solid #fff;
+            box-shadow: inset -2px -2px #808080, inset 2px 2px #fff;
+        }
+        
+        .icon-box svg {
+            width: 32px;
+            height: 32px;
+            fill: #000;
+        }
+
+        .window {
+            position: absolute;
+            background-color: #c0c0c0;
+            border: 2px outset #fff;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+            min-width: 350px;
+            min-height: 250px;
+            display: none;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .window-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #1100ff;
+            color: rgb(255, 255, 255);
+            padding: 2px 5px;
+            cursor: grab;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .window-close {
+            background-color: #c0c0c0;
+            border: 2px outset #fff;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 5px;
+            font-family: Arial, sans-serif;
+        }
+
+        .window-content {
+            flex-grow: 1;
+            background-color: #fff;
+            color: #000;
+            padding: 10px;
+            overflow-y: auto;
+            border: 2px inset #808080;
+        }
+
+        #bubble-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8em;
+            color: rgb(255, 0, 242);
+            text-shadow: 4px 4px #000;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 50;
+        }
+
+        .taskbar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-color: #c2c2c2;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            box-sizing: border-box;
+            border-top: 2px solid #fff;
+            box-shadow: inset 0px 2px #808080, inset 0px -2px #fff;
+        }
+
+        .taskbar-button {
+            background-color: #c0c0c0;
+            border: 2px outset #fff;
+            padding: 5px 10px;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .taskbar-clock {
+            margin-left: auto;
+            border: 2px inset #fff;
+            padding: 2px 5px;
+            background-color: #000000;
+        }
+
+        .shutdown-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: rgb(255, 255, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            font-size: 2em;
+            z-index: 200;
+            display: none;
+        }
+        
+        #cake-animation {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        .gallery-container img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="bubble-text"> cie ulang tahun <br>
+           traktiranya dong..</h1>
+
+    <div class="desktop">
+        <div class="icon-container">
+            <div class="icon" id="hadiah-icon">
+                <div class="icon-box">
+                    🎁
+                </div>
+                <span>Hadiah</span>
+            </div>
+            <div class="icon" id="musik-icon">
+                <div class="icon-box">
+                    🎵
+                </div>
+                <span>Musik</span>
+            </div>
+            <div class="icon" id="cake-icon">
+                <div class="icon-box">
+                    🎂
+                </div>
+                <span>Cake</span>
+            </div>
+            <div class="icon" id="galeri-icon">
+                <div class="icon-box">
+                    🖼️
+                </div>
+                <span>Galeri</span>
+            </div>
+        </div>
+
+        <div class="taskbar">
+            <span class="taskbar-button" id="shutdown-button">Shutdown</span>
+            <span class="taskbar-clock"></span> 
+        </div>
+    </div>
+
+    <!-- Jendela Hadiah -->
+    <div class="window" id="hadiah-window">
+        <div class="window-header">
+            <span>Hadiah</span>
+            <span class="window-close">X</span>
+        </div>
+        <div class="window-content">
+            <p style="font-size: 1.2em; text-align: center; padding-top: 20px;">Selamat ulang tahun yang ke-18, Rama Aditiya Putra Pratama!</p>
+            <p style="font-size: 1em; text-align: center;">Semoga panjang umur, sehat selalu,makin besarr!!!🌊🌊🌊, dan makin kalcer yeee. We are so proud of you!</p>
+        </div>
+    </div>
+    
+    <!-- Jendela Musik -->
+    <div class="window" id="musik-window">
+        <div class="window-header">
+            <span>Musik</span>
+            <span class="window-close">X</span>
+        </div>
+        <div class="window-content">
+            <h3 style="text-align: center;">HiVi! - Teman Sejati</h3>
+            <p style="font-size: 0.9em;">
+            Kadang saling canda tawa<br>
+            Kadang benci besok lupa<br>
+            Oh indahnya masa SMA<br>
+            Meski tak ada yang abadi<br>
+            Tapi kamu kan selalu di hati<br>
+            Kemanapun dua kaki ini melangkah nanti<br>
+            Ku ingin kau mengerti<br>
+            Bagiku kau teman sejati
+            </p>
+            <audio id="hivi-audio" controls style="width: 100%; margin-top: 10px;">
+                <source src="C:\Users\RENNO ERIC RAHENDRA\OneDrive\圖片\Audio WhatsApp 2025-09-08 pukul 15.50.46_a5c77e6a.mp3" type="audio/mpeg">
+                Maaf, browser kamu tidak mendukung pemutaran audio.
+            </audio>
+        </div>
+    </div>
+
+    <!-- Jendela Cake -->
+    <div class="window" id="cake-window">
+        <div class="window-header">
+            <span>Cake</span>
+            <span class="window-close">X</span>
+        </div>
+        <div class="window-content" style="display: flex; flex-direction: column; align-items: center; padding: 20px;">
+            <p>Tiuplah lilinnya, Rama!</p>
+            <img id="cake-animation" src="https://media.giphy.com/media/oWqg9sQW8yV2j8q8Rj/giphy.gif" alt="Animasi tiup lilin">
+        </div>
+    </div>
+
+    <!-- Jendela Galeri -->
+    <div class="window" id="galeri-window">
+        <div class="window-header"> 
+            <span>Galeri</span>
+            <span class="window-close">X</span>
+        </div>
+        <div class="window-content gallery-container">
+            <!-- Ganti URL gambar ini dengan foto-foto kalian -->
+            <img src="C:\Users\RENNO ERIC RAHENDRA\OneDrive\圖片\Gambar WhatsApp 2025-09-08 pukul 08.01.01_3a89b272.jpg" alt="Foto 1">
+            <img src="C:\Users\RENNO ERIC RAHENDRA\OneDrive\圖片\Gambar WhatsApp 2025-09-08 pukul 10.35.58_cb1e5b22.jpg" alt="Foto 2">
+            <img src="C:\Users\RENNO ERIC RAHENDRA\OneDrive\圖片\Gambar WhatsApp 2025-09-08 pukul 10.37.13_bc32f261.jpg" alt="Foto 3">
+            <img src="C:\Users\RENNO ERIC RAHENDRA\OneDrive\圖片\Gambar WhatsApp 2025-09-08 pukul 11.30.46_6f5ce5af.jpg" alt="Foto 4">
+        </div>
+    </div>
+
+    <div class="shutdown-message">
+        <p>Makasih sudah mau temenan ya besss,</p>
+        <p>selamat ulang tahun bess!</p> 
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const icons = {
+                hadiah: document.getElementById('hadiah-icon'), 
+                musik: document.getElementById('musik-icon'),
+                cake: document.getElementById('cake-icon'),
+                galeri: document.getElementById('galeri-icon')
+            };
+
+            const windows = {
+                hadiah: document.getElementById('hadiah-window'),
+                musik: document.getElementById('musik-window'),
+                cake: document.getElementById('cake-window'),
+                galeri: document.getElementById('galeri-window')
+            };
+
+            const shutdownButton = document.getElementById('shutdown-button');
+            const shutdownMessage = document.querySelector('.shutdown-message');
+            const audioPlayer = document.getElementById('hivi-audio');
+            const bubbleText = document.getElementById('bubble-text');
+
+            const updateClock = () => {
+                const clock = document.querySelector('.taskbar-clock');
+                const now = new Date();
+                const time = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const date = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+                clock.textContent = `${time} ${date}`;
+            };
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            const openWindow = (windowId) => {
+                Object.values(windows).forEach(win => win.style.display = 'none');
+                const windowElement = windows[windowId];
+                if (windowElement) {
+                    windowElement.style.display = 'flex';
+                    windowElement.style.top = '50%';
+                    windowElement.style.left = '50%';
+                    windowElement.style.transform = 'translate(-50%, -50%)';
+                }
+            };
+            
+            const closeWindow = (windowId) => {
+                const windowElement = windows[windowId];
+                if (windowElement) {
+                    windowElement.style.display = 'none';
+                    if (windowId === 'musik' && !audioPlayer.paused) {
+                        audioPlayer.pause();
+                        audioPlayer.currentTime = 0;
+                    }
+                }
+            };
+
+            icons.hadiah.addEventListener('click', () => openWindow('hadiah'));
+            icons.musik.addEventListener('click', () => {
+                openWindow('musik');
+                audioPlayer.play();
+            });
+            icons.cake.addEventListener('click', () => openWindow('cake'));
+            icons.galeri.addEventListener('click', () => openWindow('galeri'));
+
+            document.querySelectorAll('.window-close').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const windowElement = e.target.closest('.window');
+                    const windowId = windowElement.id.replace('-window', '');
+                    closeWindow(windowId);
+                });
+            });
+
+            shutdownButton.addEventListener('click', () => {
+                bubbleText.style.display = 'none';
+                shutdownMessage.style.display = 'flex';
+                setTimeout(() => {
+                    document.body.innerHTML = '';
+                    document.body.style.backgroundColor = '#000';
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
